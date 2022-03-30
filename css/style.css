@@ -1,0 +1,51 @@
+#header{
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+
+}
+#header .title{
+    font: bold 50px Arial;
+    color: #776e65;
+    margin: 0 auto;
+}
+#header .author{
+    font:normal 15px Arial;
+    margin: 10px auto;
+    padding-left: 25%;
+}
+#header .wrapper{
+    display: flex;
+    justify-content: space-between;
+    width: 500px;
+    margin: 0 auto;
+}
+#header .score-wrapper{
+    width: 100px;
+    background-color: #e78625;
+    padding: 6px;
+    border-radius: 6px;
+}
+#header .score-wrapper #txt{
+    color: #fff;
+
+}
+#header .score-wrapper #score{
+    color: rgb(236, 79, 79);
+    font-size: 20px;
+    vertical-align: middle;
+}
+#header .newgame-wrapper #newGame{
+    width: 100px;
+    display: block;
+    background-color: #e78625;
+    text-decoration: none;
+    padding: 12px;
+    border-radius: 6px;
+    color: #fff;
+    font: bold 20px Arial;
+
+}
+#header .newgame-wrapper #newGame:hover{
+    background-color: #bdac9c;
+}
