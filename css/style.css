@@ -49,3 +49,18 @@
 #header .newgame-wrapper #newGame:hover{
     background-color: #bdac9c;
 }
+#grid-container{
+    width: 460px;
+    height: 460px;
+    padding: 20px;
+    background-color: #bdac9c;
+    margin: 15px auto;
+    border-radius: 10px;
+    position: relative;
+}
+#grid-container .grid-cell{
+    width: 100px;
+    height: 100px;
+    background-color: #ccc0bc;
+    position: absolute;
+}
