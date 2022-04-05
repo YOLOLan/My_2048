@@ -89,7 +89,7 @@ function generateOneNumber() {
 	let randy = Math.floor(temp[pos]%4);
 
 	 //随机产生一个随机数
-	 let randNum = Math.random()<0.8?2:4;
+	 let randNum = Math.random()<0.9?2:4;
 
 	 //在随机位置上显示随机数字
 	 nums[randx][randy] = randNum;
