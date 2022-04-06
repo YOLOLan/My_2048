@@ -12,3 +12,12 @@ function showNumberWidthAnimation(i,j,randNumber){
         left:getPosLeft(i,j)
     },500);
 }
+
+//通过动画显示移动效果
+function showMoveAnimation(fromx,fromy,tox,toy){
+    let numberCell=$('#number-cell-'+fromx+'-'+fromy);
+    numberCell.animate({
+        top:getPosTop(tox,toy),
+        left:getPosLeft(tox,toy)
+    },200);
+} 

@@ -47,3 +47,31 @@ function noSpace(nums){
     }
     return true;
 }
+
+function canMoveLeft(nums){
+    for(let i=0;i<4;i++){
+        for(let j=0;j<4;j++){
+            if(nums[i][j]!=0){
+                if(nums[i][j-1]==0||nums[i][j-1]==nums[i][j]){
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+//判断水平方向是否有障碍物
+function noBlockHorizontal(row,col1,col2,nums){
+     for(var i=col1+1;i<col2;i++){
+         if(nums[row][i]!=0){
+             return false;  //有障碍物
+         }
+     }
+     return true;   //没有障碍物 
+}
+
+//更新分数
+function updateScore(score){
+    $('#score').text(score);
+}
