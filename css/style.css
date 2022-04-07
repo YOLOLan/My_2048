@@ -31,8 +31,8 @@
 
 }
 #header .score-wrapper #score{
-    color: rgb(236, 79, 79);
-    font-size: 20px;
+    color: #fff;
+    font-size: 30px;
     vertical-align: middle;
 }
 #header .newgame-wrapper #newGame{

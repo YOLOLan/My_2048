@@ -126,3 +126,21 @@ function noBlockVertical(col,row1,row2,nums){
 function updateScore(score){
     $('#score').text(score);
 }
+
+//判断是否不能移动
+function noMove(nums){
+    if(canMoveLeft(nums) || canMoveRight(nums) || canMoveUp(nums) || canMoveDown(nums)){
+        return false;
+    }
+    return true;
+}
+/*
+判断游戏是否结束
+1.没有空单元格
+2.不能移动
+*/
+function isGameOver(){
+    if(noSpace(nums) && noMove(nums)){
+        alert('Game Over!');
+    }
+}

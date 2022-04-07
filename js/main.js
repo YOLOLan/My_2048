@@ -105,30 +105,37 @@ function generateOneNumber() {
 
 //实现键盘响应
 $(document).keydown(function (event) {
+	//阻止事件的默认动作
+	event.preventDefault();
+
 	switch (event.keyCode) {
 		case 37:  //left
 			//判断是否可以向左移动
 			if(canMoveLeft(nums)){
 				moveLeft();
 				setTimeout(generateOneNumber,200);
+				setTimeout(isGameOver,600);
 			}
 			break;
 		case 38:  //up
 			if(canMoveUp(nums)){
 				moveUp();
 				setTimeout(generateOneNumber,200);
+				setTimeout(isGameOver,600);
 			}
 			break;
 		case 39:  //right
 			if(canMoveRight(nums)){
 				moveRight();
 				setTimeout(generateOneNumber,200);
+				setTimeout(isGameOver,600);
 			}
 			break;
 		case 40:  //down
 			if(canMoveDown(nums)){
 				moveDown();
 				setTimeout(generateOneNumber,200);
+				setTimeout(isGameOver,600);
 			}
 			break;
 	}
