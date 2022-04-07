@@ -114,10 +114,22 @@ $(document).keydown(function (event) {
 			}
 			break;
 		case 38:  //up
+			if(canMoveUp(nums)){
+				moveUp();
+				setTimeout(generateOneNumber,200);
+			}
 			break;
 		case 39:  //right
+			if(canMoveRight(nums)){
+				moveRight();
+				setTimeout(generateOneNumber,200);
+			}
 			break;
 		case 40:  //down
+			if(canMoveDown(nums)){
+				moveDown();
+				setTimeout(generateOneNumber,200);
+			}
 			break;
 	}
 });
@@ -130,7 +142,7 @@ $(document).keydown(function (event) {
 */
 function moveLeft(){
 	for(let i=0;i<4;i++){
-		for(let j=0;j<4;j++){
+		for(let j=1;j<4;j++){
 			if(nums[i][j]!=0){
 				for(let k=0;k<j;k++){
 					if(nums[i][k]==0 && noBlockHorizontal(i,k,j,nums)){  //第i行的第k-j列之间是否有障碍物
@@ -158,3 +170,89 @@ function moveLeft(){
 	setTimeout(updateView,200);//计时器200ms
 }
 
+/*向右移动*/
+function moveRight(){
+	for(let i=0;i<4;i++){
+		for(let j=2;j>=0;j--){
+			if(nums[i][j]!=0){
+				for(let k=3;k>j;k--){
+					if(nums[i][k]==0 && noBlockHorizontal(i,j,k,nums)){  //第i行的第j-k列之间是否有障碍物
+						//移动操作
+						showMoveAnimation(i,j,i,k);
+						nums[i][k]=nums[i][j];
+						nums[i][j]=0;
+						break;
+					}else if(nums[i][k]==nums[i][j]&&noBlockHorizontal(i,j,k,nums) && !hasConflicted[i][k]){
+						showMoveAnimation(i,j,i,k);
+						nums[i][k]+=nums[i][j];
+						nums[i][j]=0;
+						//统计分数
+						score +=  nums[i][k];
+						updateScore(score);
+
+						hasConflicted[i][k]=true; //已经叠加
+						break;
+					}
+				}
+			}
+		}
+	}
+	//更新页面上的数字单元格，此处才是真正的更新显示移动后的效果
+	setTimeout(updateView,200);//计时器200ms
+}
+
+/*向上移动*/
+function moveUp(){
+	for(let j=0;j<4;j++){    //j-列，i-行
+		for(let i=1;i<4;i++){
+			if(nums[i][j]!=0){
+				for(let k=0;k<i;k++){
+					if(nums[k][j]==0 && noBlockVertical(j,k,i,nums)){  //第j列的第k-i行之间是否有障碍物
+						showMoveAnimation(i,j,k,j);
+						nums[k][j]=nums[i][j];
+						nums[i][j]=0;
+						break;
+					}else if(nums[k][j]==nums[i][j] && noBlockVertical(j,k,i,nums) && !hasConflicted[k][j]){
+						showMoveAnimation(i,j,k,j);
+						nums[k][j]+=nums[i][j];
+						nums[i][j]=0;
+						score+=nums[k][j];
+						updateScore(score);
+
+						hasConflicted[k][j]=true;
+						break;
+					}
+				}
+			}
+		}
+	}
+	setTimeout(updateView,200);
+}
+
+/*向下移动*/
+function moveDown(){
+	for(let j=0;j<4;j++){     //j-列，i-行
+		for(let i=2;i>=0;i--){
+			if(nums[i][j]!=0){
+				for(let k=3;k>i;k--){
+					if(nums[k][j]==0 && noBlockVertical(j,i,k,nums)){  //第j列的第i-k行之间是否有障碍物
+						showMoveAnimation(i,j,k,j);
+						nums[k][j]=nums[i][j];
+						nums[i][j]=0;
+						break;
+					}else if(nums[k][j]==nums[i][j] && noBlockVertical(j,i,k,nums) && !hasConflicted[k][j]){
+						showMoveAnimation(i,j,k,j);
+						nums[k][j]+=nums[i][j];
+						nums[i][j]=0;
+						score += nums[k][j];
+						updateScore(score);
+
+						hasConflicted[k][j]=true;
+						break;
+					}
+				}
+			}
+		}
+	}
+	setTimeout(updateView,200);
+}

@@ -48,9 +48,10 @@ function noSpace(nums){
     return true;
 }
 
+//判断是否可以左移
 function canMoveLeft(nums){
     for(let i=0;i<4;i++){
-        for(let j=0;j<4;j++){
+        for(let j=1;j<4;j++){
             if(nums[i][j]!=0){
                 if(nums[i][j-1]==0||nums[i][j-1]==nums[i][j]){
                     return true;
@@ -61,6 +62,47 @@ function canMoveLeft(nums){
     return false;
 }
 
+//判断是否可以右移
+function canMoveRight(nums){
+    for(let i=0;i<4;i++){
+        for(let j=0;j<3;j++){
+            if(nums[i][j]!=0){
+                if(nums[i][j+1]==0||nums[i][j+1]==nums[i][j]){
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+//判断是否可以上移
+function canMoveUp(nums){
+    for(let i=1;i<4;i++){
+        for(let j=0;j<4;j++){
+            if(nums[i][j]!=0){
+                if(nums[i-1][j]==0 || nums[i-1][j]==nums[i][j]){
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+//判断是否可以下移
+function canMoveDown(nums){
+    for(let i=0;i<3;i++){
+        for(let j=0;j<4;j++){
+            if(nums[i][j]!=0){
+                if(nums[i+1][j]==0 || nums[i+1][j]==nums[i][j]){
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
 //判断水平方向是否有障碍物
 function noBlockHorizontal(row,col1,col2,nums){
      for(var i=col1+1;i<col2;i++){
@@ -71,6 +113,15 @@ function noBlockHorizontal(row,col1,col2,nums){
      return true;   //没有障碍物 
 }
 
+//判断垂直方向是否有障碍物
+function noBlockVertical(col,row1,row2,nums){
+    for(let i=row1+1;i<row2;i++){
+        if(nums[i][col]!=0){
+            return false;
+        }
+    }
+    return true;
+}
 //更新分数
 function updateScore(score){
     $('#score').text(score);
