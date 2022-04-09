@@ -2,17 +2,47 @@ let nums = new Array();
 let score = 0;
 let hasConflicted=new Array(); //是否已经叠加 ，用以解决单元格是否重复叠加的问题
 
+//移动端适配触摸实现
+let startx = 0;
+let starty = 0;
+let endx = 0;
+let endy = 0;
+
 $(document).ready(function () {
 	newgame();
 });
 
 //开始新游戏
 function newgame() {
+
+	if(documentWidth>500){
+		containerWidth = 500;
+		cellWidth = 100;
+		cellSpace = 20;
+	}else{
+		settingForMobile();	//设置移动端尺寸
+	}
+
+
 	init();
 
 	//在随机的两个单元格生成数字
 	generateOneNumber();
 	generateOneNumber();
+}
+
+//移动端尺寸函数
+function settingForMobile(){
+	$('#header .wrapper').css('width',containerWidth);
+
+	$('#grid-container').css('width',containerWidth-cellSpace*2);
+	$('#grid-container').css('height',containerWidth-cellSpace*2);
+	$('#grid-container').css('padding',cellSpace);
+	$('#grid-container').css('border-radius',containerWidth*0.02);//圆角
+
+	$('.grid-cell').css('width',cellWidth);
+	$('.grid-cell').css('height',cellWidth);
+	$('.grid-cell').css('border-radius',cellWidth*0.06);
 }
 
 //初始化页面
@@ -54,11 +84,11 @@ function updateView() {
 			if (nums[i][j] == 0) {
 				numberCell.css('width', '0px');
 				numberCell.css('height', '0px');
-				numberCell.css('top', getPosTop(i, j) + 50);
-				numberCell.css('left', getPosLeft(i, j) + 50);
+				numberCell.css('top', getPosTop(i, j) + cellWidth*0.5);
+				numberCell.css('left', getPosLeft(i, j) + cellWidth*0.5);
 			} else {
-				numberCell.css('width', '100px');
-				numberCell.css('height', '100px');
+				numberCell.css('width',cellWidth);
+				numberCell.css('height', cellWidth);
 				numberCell.css('top', getPosTop(i, j));
 				numberCell.css('left', getPosLeft(i, j));
 				numberCell.css('background-color', getNumberBackgroundColor(nums[i][j]));
@@ -66,6 +96,11 @@ function updateView() {
 				numberCell.text(nums[i][j]);
 			}
 			hasConflicted[i][j]=false;
+
+			//移动端尺寸
+			$('.number-cell').css('border-radius',cellWidth*0.06);
+			$('.number-cell').css('font-size',cellWidth*0.5);
+			$('.number-cell').css('line-height',cellWidth+'px');
 		}
 	}
 }
@@ -139,6 +174,57 @@ $(document).keydown(function (event) {
 			}
 			break;
 	}
+});
+
+//实现触摸滑动响应
+document.addEventListener('touchstart',function(event){  //触摸起点
+	startx = event.touches[0].pageX;
+	starty = event.touches[0].pageY;
+});
+
+document.addEventListener('touchend',function(event){   //触摸终点
+	endx = event.changedTouches[0].pageX;
+	endy = event.changedTouches[0].pageY;
+
+	//判断滑动方向
+	let deltax = endx-startx;
+	let deltay = endy-starty;
+	
+	//误差处理：判断滑动距离小于一定阈值时不做移动
+	if(Math.abs(deltax)<documentWidth*0.03 && Math.abs(deltay)<documentWidth*0.03){
+		return;
+	}
+
+	if(Math.abs(deltax)>=Math.abs(deltay)){  //水平方向移动；Math.abs()取绝对值
+		if(deltax>0){  //向右移动
+			if(canMoveRight(nums)){
+				moveRight();
+				setTimeout(generateOneNumber,200);
+				setTimeout(isGameOver,600);
+			}
+		}else{  //向左移动
+			if(canMoveLeft(nums)){
+				moveLeft();
+				setTimeout(generateOneNumber,200);
+				setTimeout(isGameOver,600);
+			}
+		}
+	 }else{  //垂直移动
+		if(deltay>0){  //向下移动
+			if(canMoveDown(nums)){
+				moveDown();
+				setTimeout(generateOneNumber,200);
+				setTimeout(isGameOver,600);
+			}
+		}else{   //向上移动
+			if(canMoveUp(nums)){
+				moveUp();
+				setTimeout(generateOneNumber,200);
+				setTimeout(isGameOver,600);
+			}
+		}
+
+	 }
 });
 
 /*

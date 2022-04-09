@@ -1,11 +1,21 @@
+//获取移动端尺寸
+//let screeWidth = window.screen.availWidth;
+let documentWidth = document. documentElement.clientWidth; //页面DOM宽度
+let containerWidth = documentWidth*0.92; //容器的宽度92%；
+let cellWidth = documentWidth*0.18; // 数字单元格宽度18%
+let cellSpace = documentWidth*0.04; //间隔4%
+
+
 //获取距离上边的位置
 function getPosTop(i,j){
-    return 20+120*i;
+    //return 20+120*i;
+    return cellSpace+(cellWidth+cellSpace)*i; 
 }
 
 //获取距离左边的位置
 function getPosLeft(i,j){ 
-    return 20+120*j;
+    //return 20+120*j;
+    return cellSpace+(cellWidth+cellSpace)*j; 
 }
 
 //获取数字背景颜色
